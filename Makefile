@@ -71,7 +71,7 @@ git-upload: git-save .git-push
 git-upload-new: git-save .git-push-new
 
 .git-push-new:
-	@git push -u $(upstream_label) $(branch_name)
+	@git push -u $(upstream_label) $(branch_name) --force
 
 git-download:
 	@git fetch
