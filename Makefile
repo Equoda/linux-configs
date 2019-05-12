@@ -81,7 +81,7 @@ git-upload-new: git-save .git-push-new
 github-upload-new: git-save .gitlab-create-repo .git-push-new
 
 .gitlab-create-repo:
-	@curl -u "$(git_user_name)" "$(upstream_api_url)/repos" -d '{"name":"$(repository_name)"}'
+	@curl -X "POST" -u "$(git_user_name)" "$(upstream_api_url)/user/repos" -d '{"name":"$(repository_name)"}'
 
 .git-push-new:
 	@git push -u $(upstream_label) $(branch_name) --force
