@@ -10,7 +10,7 @@ git_user_name := Equoda
 repository_name := $(name).git
 upstream_label := github
 upstream_url := git@github.com:$(git_user_name)/$(repository_name)
-upstream_api_url := https://github.com/$(git_user_name)
+upstream_api_url := https://api.github.com
 branch_name := $(shell git rev-parse --abbrev-ref HEAD)
 
 # Main targets --------------------------------------------
@@ -66,6 +66,10 @@ git-set-upstream:
 
 git-check-upstream-access:
 	@ssh -T git@github.com
+
+github-get-repsitories:
+	$(info Repositories existing on Github [user: $(git_user_name)])
+	@curl "$(upstream_api_url)/users/$(git_user_name)/repos" 2>/dev/null | grep -F "ssh_url"
 
 git-upload: git-save .git-push
 
