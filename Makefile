@@ -1,8 +1,16 @@
 # Init environment ----------------------------------------
+
 root_dir := $(shell pwd)
 name := $(shell basename $(root_dir))
 version := $(shell cat $(root_dir)/VERSION)
 
+# Git options ---------------------------------------------
+
+git_user_name := Equoda
+repository_name := $(name).git
+upstream_label := github
+upstream_url := git@github.com/$(git_user_name)/$(repository_name)
+branch_name := $(shell git rev-parse --abbrev-ref HEAD)
 
 # Main targets --------------------------------------------
 
@@ -50,3 +58,19 @@ git-save: .git-add .git-commit
 
 .git-commit:
 	@git commit -a
+
+git-upload: git-save .git-set-upstream .git-push
+
+.git-set-upstream:
+	@git remote add $(upstream_label) $(upstream_url)
+
+.git-push:
+	@git push $(upstream_label) $(branch_name)
+
+git-upload-new: git-save .git-set-upstream .git-push-new
+
+.git-push-new:
+	@git push -u $(upstream_label) $(branch_name)
+
+git-download:
+	@git fetch
