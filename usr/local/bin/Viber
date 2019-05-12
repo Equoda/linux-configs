@@ -1,0 +1,2 @@
+export QML_DISABLE_DISK_CACHE=1
+/opt/viber/Viber ${@}

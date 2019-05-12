@@ -1,0 +1,23 @@
+#!/bin/bash
+
+APPLICATION="/usr/bin/google-chrome-stable"
+APPLICATION_NAME=$(basename "${APPLICATION}")
+APPLICATION_OPTIONS="--incognito ${@}"
+
+
+
+# Make some checks
+[ ! -e "${APPLICATION}" ] && { echo "No such file: ${APPLICATION} [ FIREJAIL_PROFILE ]!"; exit 1; }
+
+# Allow X connection for FIREJAIL_USER
+#xhost +SI:localuser:${FIREJAIL_USER}
+#xhost
+
+# Run application
+#xrandr --listproviders
+#xrandr --setprovideroffloadsink nouveau Intel
+export DRI_PRIME=1
+/usr/bin/firejail \
+	-- \
+	"${APPLICATION}" ${APPLICATION_OPTIONS} 
+

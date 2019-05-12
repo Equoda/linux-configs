@@ -1,0 +1,32 @@
+#!/bin/bash
+
+APPLICATION="/usr/bin/google-chrome-stable"
+APPLICATION_NAME=$(basename "${APPLICATION}")
+APPLICATION_OPTIONS="--incognito ${@}"
+FIREJAIL_USER="firejail-secure"
+FIREJAIL_HOME="/home/firejail-secure/.config"
+FIREJAIL_PROFILE="/home/${FIREJAIL_USER}/${APPLICATION_NAME}-isolated.profile"
+
+
+
+# Make some checks
+[ "${FIREJAIL_USER}z " == "z" ] && { echo "FIREJAIL_USER is empty!"; exit 1; }
+[ ! -d "${FIREJAIL_HOME}" ] && { echo "No such directory: ${FIREJAIL_HOME} [ FIREJAIL_HOME ]!"; exit 1; }
+[ ! -e "${FIREJAIL_PROFILE}" ] && { echo "No such file: ${FIREJAIL_PROFILE} [ FIREJAIL_PROFILE ]!"; exit 1; }
+[ ! -e "${APPLICATION}" ] && { echo "No such file: ${APPLICATION} [ FIREJAIL_PROFILE ]!"; exit 1; }
+
+# Allow X connection for FIREJAIL_USER
+xhost +SI:localuser:${FIREJAIL_USER}
+xhost
+
+# Run application
+gksudo --sudo-mode -u "${FIREJAIL_USER}" -- /bin/bash -c "{ \
+	/usr/bin/firejail \
+		--profile="""${FIREJAIL_PROFILE}""" \
+		--private-home="""${FIREJAIL_HOME}""" \
+		--private-dev \
+		--private-tmp \
+		-- \
+		"""${APPLICATION}""" ${APPLICATION_OPTIONS} ; \
+	}"
+
