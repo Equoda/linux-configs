@@ -21,9 +21,11 @@ help:
 	$(info --------------------------------------)
 	$(info Rum as: "make [target]")
 	$(info Available targets:)
-	@grep -E "^[0-9a-z-]+[:]$$" $(root_dir)/Makefile | grep -v -E "^git" | sed -e 's/://g' -e 's/^/\t/g'
+	@grep -E -o "^[0-9a-z]+[:]" $(root_dir)/Makefile | grep -v -E "^(all:|help:)" | sed -e 's/://g' -e 's/^/\t/g'
 
 # Git targets ---------------------------------------------
+
+git: help-git
 
 help-git:
 	$(info --------------------------------------)
