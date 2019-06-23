@@ -73,12 +73,12 @@ github-get-repsitories:
 	$(info Repositories existing on Github [user: $(git_user_name)])
 	@curl "$(upstream_api_url)/users/$(git_user_name)/repos" 2>/dev/null | grep -F "ssh_url"
 
-git-upload: git-save .git-push
+git-upload: .git-push
 
 .git-push:
 	@git push $(upstream_label) $(branch_name)
 
-git-upload-new: git-save .git-push-new
+git-upload-new: .git-push-new
 
 github-upload-new: git-save .gitlab-create-repo .git-push-new
 

@@ -1,0 +1,23 @@
+a	Mount at3iont
+	mount /mnt/at3iont
+
+r	Change resolution to 640x480
+	xrandr -s 640x480
+
+R	Change resolution to 1366x768
+	xrandr -s 1366x768
+
+	Run MOG
+	xrandr -s 640x480
+	mog
+	#xrandr -s 1366x768
+
++ t t
+@   Create symlinks
+	if [ "%d" = "%D" ]; then
+		echo "The two directores must be different."
+		exit 1
+		fi
+	for i in %t; do
+		ln -s "%d/${i}" "%D/"
+		done

@@ -1,0 +1,7 @@
+ENTRY "at3iont" URL "/mnt/at3iont"
+ENTRY "home" URL "/home/mine"
+ENTRY "opt" URL "/opt"
+ENTRY "mnt" URL "/mnt"
+GROUP "truecrypt"
+  ENTRY "money" URL "/media/truecrypt1/money"
+ENDGROUP
